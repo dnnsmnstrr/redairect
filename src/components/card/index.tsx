@@ -47,7 +47,7 @@ const Card = (props: CardProps) => {
             className="text-xl text-gray-100 transition-all hover:text-gray-300"
             target="_blank"
             rel="noreferrer"
-            href={`https://slug.vercel.app/s/${props.slug}`}
+            href={`/s/${props.slug}`}
           >
             /s/{props.slug}
           </a>
@@ -61,6 +61,7 @@ const Card = (props: CardProps) => {
         </div>
         <p className="mb-2 text-gray-500">{props.url}</p>
         <p className="text-gray-400">{props.description}</p>
+        <p className="text-gray-400">{props.aliases}</p>
       </div>
       <div>
         <Dropdown

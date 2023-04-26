@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/server/db/client";
 
-const UrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { slug } = req.query;
+const UserUrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { user, slug } = req.query;
 
   if (!slug || typeof slug !== "string") {
     return res.status(400).json({
@@ -10,11 +10,33 @@ const UrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
+  const userData = await prisma.User.findFirst({
+    where: {
+      username: {
+        equals: user,
+      },
+    },
+  });
+
+  console.log(userData);
+
   const data = await prisma.link.findFirst({
     where: {
-      slug: {
-        equals: slug,
-      },
+      OR: [
+        {
+          slug: {
+            equals: slug,
+          }
+        },
+        {
+          aliases: {
+            contains: slug,
+          }
+        }
+      ],
+      creatorId: {
+        equals: userData?.id,
+      }
     },
   });
 
@@ -30,4 +52,4 @@ const UrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.json(data);
 };
 
-export default UrlApi;
+export default UserUrlApi;

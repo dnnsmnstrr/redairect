@@ -24,7 +24,7 @@ const Home: NextPage = () => {
             Getting Started
           </LinkRoute>
           <a
-            href="https://github.com/pheralb/slug"
+            href="https://github.com/dnnsmnstrr/redairect"
             target="_blank"
             rel="noreferrer"
             className="flex items-center hover:text-gray-300 duration-200 transition-all ml-6"

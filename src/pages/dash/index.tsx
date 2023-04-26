@@ -96,6 +96,7 @@ const Dashboard = () => {
               id={link.id}
               url={link.url}
               description={link.description || "No description."}
+              aliases={link.aliases || "No aliases."}
               slug={link.slug}
             />
           ))}

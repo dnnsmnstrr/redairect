@@ -118,6 +118,16 @@ const Create = () => {
         </div>
         {errors.slug && <Alert className="mt-2">{errors.slug.message}</Alert>}
       </div>
+      <div className="mb-5">
+        <label htmlFor="url">Aliases:</label>
+        <input
+          id="aliases"
+          type="text"
+          placeholder="Comma separated aliases"
+          className="mt-1 w-full rounded-md bg-midnightLight px-4 py-2 text-white focus:border-none"
+          {...register("aliases")}
+        />
+      </div>
       <div className="mb-3">
         <label htmlFor="description">Description (optional):</label>
         <textarea

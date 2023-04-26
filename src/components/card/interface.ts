@@ -3,5 +3,6 @@ export interface CardProps {
   url: string;
   slug: string;
   description: string;
+  aliases: string;
   className?: string;
 }

@@ -1,8 +1,8 @@
 export default {
-  title: "URL Shortener",
+  title: "redAIrect",
   titleTemplate: "%s - slug",
   description:
-    "A URL shortener built with T3 Stack",
+    "A URL shortener with support for Ailiases",
   defaultTitle: "slug",
   additionalLinkTags: [
     {
