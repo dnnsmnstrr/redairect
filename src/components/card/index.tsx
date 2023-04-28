@@ -96,6 +96,7 @@ const Card = (props: CardProps) => {
             id={props.id}
             slug={props.slug}
             url={props.url}
+            aliases={props.aliases}
             description={props.description}
           />
         </Modal>
