@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { EditLinkInput } from "@/schema/link.schema";
 import { trpc } from "@/utils/trpc";
@@ -13,6 +13,7 @@ interface EditProps {
   id: number;
   slug: string;
   url: string;
+  aliases: string;
   description: string;
 }
 
@@ -48,6 +49,7 @@ const Edit = (props: EditProps) => {
     mutate({
       slug: props.slug,
       url: values.url,
+      aliases: props.aliases,
       description: values.description,
     });
   };
