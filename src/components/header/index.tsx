@@ -18,7 +18,7 @@ const Header = () => {
           <Auth />
           <CommandMenu />
           <a
-            href="https://github.com/pheralb/slug"
+            href="https://github.com/dnnsmnstrr/redairect"
             rel="noreferrer"
             target="_blank"
           >

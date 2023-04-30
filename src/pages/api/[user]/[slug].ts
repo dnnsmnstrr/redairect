@@ -36,7 +36,7 @@ const UserUrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
       OR: [
         {
           slug: {
-            equals: slug,
+            contains: slug,
           }
         },
         {

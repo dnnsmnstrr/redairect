@@ -6,14 +6,17 @@ import { Dropdown, DropdownItem } from "@/ui/dropdown";
 import Modal from "@/ui/modal";
 import Edit from "../functions/edit";
 import Delete from "../functions/delete";
+import { useSession } from "next-auth/react";
 
 import { CardProps } from "./interface";
 import { toastStyles } from "@/styles/toast";
 
 const Card = (props: CardProps) => {
+  const { data: session } = useSession();
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const slug = session?.user?.username && props.slug.includes(session?.user?.username) ? props.slug : 's/' + props.slug;
   const handleEditModal = () => {
     setEditModal(!editModal);
   };
@@ -22,7 +25,8 @@ const Card = (props: CardProps) => {
     setDeleteModal(!deleteModal);
   };
 
-  const copyToClipboard = async (txt: string) => {
+  const copyToClipboard = async () => {
+    const txt = `${window.location.origin}/${slug}`;
     try {
       const clipboardItem = new ClipboardItem({
         "text/plain": new Blob([txt], { type: "text/plain" }),
@@ -47,16 +51,14 @@ const Card = (props: CardProps) => {
             className="text-xl text-gray-100 transition-all hover:text-gray-300"
             target="_blank"
             rel="noreferrer"
-            href={`/s/${props.slug}`}
+            href={slug}
           >
-            /s/{props.slug}
+            {slug}
           </a>
           <IconButton
             icon={<BiCopy />}
             className="ml-1 p-1 text-gray-500 transition-colors duration-200 hover:text-gray-200"
-            onClick={() =>
-              copyToClipboard(`https://slug.vercel.app/s/${props.slug}`)
-            }
+            onClick={copyToClipboard}
           />
         </div>
         <p className="mb-2 text-gray-500">{props.url}</p>
@@ -71,9 +73,7 @@ const Card = (props: CardProps) => {
         >
           <DropdownItem
             icon={<BiCopy size={17} />}
-            onClick={() =>
-              copyToClipboard(`https://slug.vercel.app/s/${props.slug}`)
-            }
+            onClick={copyToClipboard}
           >
             Copy
           </DropdownItem>
@@ -88,7 +88,7 @@ const Card = (props: CardProps) => {
           </DropdownItem>
         </Dropdown>
         <Modal
-          title={`Edit: /s/${props.slug}`}
+          title={`Edit: /${slug}`}
           open={editModal}
           close={handleEditModal}
         >
@@ -101,7 +101,7 @@ const Card = (props: CardProps) => {
           />
         </Modal>
         <Modal
-          title={`Delete: /s/${props.slug}`}
+          title={`Delete: /${slug}`}
           open={deleteModal}
           close={handleDeleteModal}
         >

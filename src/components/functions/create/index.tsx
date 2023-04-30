@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 import { trpc } from "@/utils/trpc";
 import { CreateLinkInput } from "@/schema/link.schema";
 import { BiRefresh, BiRocket } from "react-icons/bi";
 import { nanoid } from "nanoid";
 import toast from "react-hot-toast";
-
 import Button from "@/ui/button";
 import Toggle from "@/ui/toggle";
 import Alert from "@/ui/alert";
@@ -20,6 +20,7 @@ const Create = () => {
     setError,
     formState: { errors },
   } = useForm<CreateLinkInput>();
+  const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [isScoped, setIsScoped] = useState(false);
 
@@ -51,6 +52,9 @@ const Create = () => {
         message: "The URL and the slug cannot be the same",
       });
       return;
+    }
+    if (isScoped) {
+      values.slug = `${session?.user?.username}/${values.slug}`;
     }
     setLoading(true);
     mutate(values);
@@ -93,7 +97,7 @@ const Create = () => {
       <div className="mb-5">
         <label htmlFor="slug">Custom slug:</label>
         <div className="mt-1 flex items-center justify-between">
-          <p className="text-gray-500">https://slug.vercel.app/s/</p>
+          <p className="text-gray-500">https://redairect.com/{isScoped ? session?.user?.username : 's'}/</p>
           <Toggle checked={isScoped} onChange={setIsScoped} label="Scoped to User"/>
         </div>
         <div className="mt-1 flex items-center justify-between">
