@@ -11,6 +11,12 @@ const UserUrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
+  if (!user || typeof user !== "string") {
+    return res.status(400).json({
+      error: "[X] Error: Missing user? Remember that urls start like this: /u/yourLink",
+    });
+  }
+
   const userData = await prisma.user.findFirst({
     where: {
       username: {
