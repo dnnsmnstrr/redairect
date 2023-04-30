@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 import toast from "react-hot-toast";
 
 import Button from "@/ui/button";
+import Toggle from "@/ui/toggle";
 import Alert from "@/ui/alert";
 import { toastStyles } from "@/styles/toast";
 
@@ -20,6 +21,8 @@ const Create = () => {
     formState: { errors },
   } = useForm<CreateLinkInput>();
   const [loading, setLoading] = useState(false);
+  const [isScoped, setIsScoped] = useState(false);
+
   const router = useRouter();
 
   const { mutate } = trpc.links.createLink.useMutation({
@@ -89,7 +92,10 @@ const Create = () => {
       </div>
       <div className="mb-5">
         <label htmlFor="slug">Custom slug:</label>
-        <p className="text-gray-500">https://slug.vercel.app/s/</p>
+        <div className="mt-1 flex items-center justify-between">
+          <p className="text-gray-500">https://slug.vercel.app/s/</p>
+          <Toggle checked={isScoped} onChange={setIsScoped} label="Scoped to User"/>
+        </div>
         <div className="mt-1 flex items-center justify-between">
           <input
             id="slug"

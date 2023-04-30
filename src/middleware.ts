@@ -13,19 +13,24 @@ export async function middleware(req: NextRequest, ev: NextFetchEvent) {
   }
 
   // Get data from query:
-  const data = await fetch(`${req.nextUrl.origin}/api/${user}/${slug}`);
-
+  const url = `${req.nextUrl.origin}/api/${user}/${slug}`
+  const data = await fetch(url)
   // Return (/) if not found (404):
-  if (data.status === 404) {
+  if (data.status === 404 || data.status === 400) {
     return NextResponse.redirect(req.nextUrl.origin);
   }
 
-  // Convert data to JSON:
-  const dataToJson = await data.json();
+  try {
+    const dataToJson = await data.json();
+    console.log(dataToJson);
 
-  if (data?.url) {
-    return NextResponse.redirect(new URL(dataToJson.url));
+    if (data?.url) {
+      return NextResponse.redirect(new URL(dataToJson.url));
+    }
+  } catch (error) {
+    console.log(error)
   }
+
 }
 
 export const config = {

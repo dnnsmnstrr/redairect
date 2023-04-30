@@ -3,6 +3,7 @@ import { prisma } from "@/server/db/client";
 
 const UserUrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, slug } = req.query;
+  console.log(user, slug);
 
   if (!slug || typeof slug !== "string") {
     return res.status(400).json({
@@ -10,7 +11,7 @@ const UserUrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const userData = await prisma.User.findFirst({
+  const userData = await prisma.user.findFirst({
     where: {
       username: {
         equals: user,
@@ -18,7 +19,11 @@ const UserUrlApi = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
-  console.log(userData);
+  if (!userData) {
+    return res.status(404).json({
+      error: "[X] Error: User not found or removed.",
+    });
+  }
 
   const data = await prisma.link.findFirst({
     where: {
