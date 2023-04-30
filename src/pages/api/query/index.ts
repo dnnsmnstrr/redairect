@@ -25,6 +25,7 @@ async function createNewLink(req: NextApiRequest, res: NextApiResponse) {
         data: {
           slug: body.slug,
           url: body.url,
+          aliases: body.aliases,
           description: body.description,
           creatorId: body.creatorId,
         },
